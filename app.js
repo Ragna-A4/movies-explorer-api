@@ -12,6 +12,7 @@ const { createUser, login, logout } = require('./controllers/users');
 const { checkAuthentication } = require('./middlewares/auth');
 const mainErrorHandler = require('./middlewares/errors');
 const NotFound = require('./errors/404_notfound');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -20,6 +21,8 @@ mongoose.connect(DB_URL, {
 });
 
 const app = express();
+
+app.use(requestLogger);
 
 app.use(cookies());
 app.use(bodyParser.json());
@@ -52,9 +55,8 @@ app.use('*', (_req, _res, next) => {
   next(new NotFound());
 });
 
+app.use(errorLogger);
 app.use(errors());
 app.use(mainErrorHandler);
 
-app.listen(PORT, () => {
-  // console.log(`Application is runnig on port ${PORT}`);
-});
+app.listen(PORT, () => {});
