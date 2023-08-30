@@ -11,7 +11,7 @@ const { validateUrl } = require('../utils/regular');
 
 const isValidId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().hex().required(),
+    movie_id: Joi.string().hex().required(),
   }),
 });
 
@@ -37,6 +37,6 @@ moviesRouter.post(
   createMovie,
 );
 
-moviesRouter.delete('/_id', isValidId, deleteMovie);
+moviesRouter.delete('/:movie_id', isValidId, deleteMovie);
 
 module.exports = moviesRouter;

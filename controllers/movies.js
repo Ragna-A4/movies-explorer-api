@@ -22,7 +22,7 @@ function createMovie(req, res, next) {
 }
 
 function deleteMovie(req, res, next) {
-  return Movie.findById(req.params.movieId)
+  return Movie.findById(req.params.movie_id)
     .then((movie) => {
       if (!movie) {
         return next(new NotFound());
