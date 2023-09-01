@@ -3,8 +3,8 @@ const BadRequest = require('../errors/400_badrequest');
 const Forbidden = require('../errors/403_forbidden');
 const NotFound = require('../errors/404_notfound');
 
-function getMovies(_req, res, next) {
-  return Movie.find({})
+function getMovies(req, res, next) {
+  return Movie.find({ owner: req.user._id })
     .then((movies) => res.status(200).send(movies))
     .catch(next);
 }
@@ -30,7 +30,7 @@ function deleteMovie(req, res, next) {
       if (!movie.owner.equals(req.user._id)) {
         return next(new Forbidden());
       }
-      return Movie.deleteOne()
+      return Movie.deleteOne(movie._id)
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
         .catch(next);
     })

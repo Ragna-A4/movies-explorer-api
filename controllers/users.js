@@ -56,7 +56,9 @@ function updateUserInfo(req, res, next) {
       return res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new Conflict());
+      } else if (err.name === 'ValidationError') {
         next(new BadRequest());
       } else {
         next(err);
@@ -90,10 +92,8 @@ function login(req, res, next) {
 }
 
 function logout(_req, res) {
-  if (res.cookie) {
-    res.clearCookie('jwt');
-    res.send({ message: 'Вы вышли из аккаунта' });
-  }
+  res.clearCookie('jwt');
+  res.send({ message: 'Вы вышли из аккаунта' });
 }
 
 module.exports = {

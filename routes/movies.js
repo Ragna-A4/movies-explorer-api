@@ -11,7 +11,7 @@ const { validateUrl } = require('../utils/regular');
 
 const isValidId = celebrate({
   params: Joi.object().keys({
-    movie_id: Joi.string().hex().required(),
+    movie_id: Joi.string().length(24).hex().required(),
   }),
 });
 

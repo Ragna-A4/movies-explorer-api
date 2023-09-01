@@ -51,7 +51,7 @@ app.post(
 app.post('/signout', checkAuthentication, logout);
 app.use('/users', checkAuthentication, usersRouter);
 app.use('/movies', checkAuthentication, moviesRouter);
-app.use('*', (_req, _res, next) => {
+app.use('*', checkAuthentication, (_req, _res, next) => {
   next(new NotFound());
 });
 
