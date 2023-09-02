@@ -30,7 +30,7 @@ function deleteMovie(req, res, next) {
       if (!movie.owner.equals(req.user._id)) {
         return next(new Forbidden());
       }
-      return Movie.deleteOne(movie._id)
+      return Movie.deleteOne({ _id: req.params.movie_id })
         .then(() => res.status(200).send({ message: 'Фильм удален' }))
         .catch(next);
     })
