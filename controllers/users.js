@@ -82,8 +82,7 @@ function login(req, res, next) {
           res.cookie('jwt', jwt, {
             expiresIn: '7d',
             httpOnly: true,
-            // eslint-disable-next-line
-            SameSite: none,
+            sameSite: true,
           });
 
           return res.status(200).send({ data: user.toJSON() });
