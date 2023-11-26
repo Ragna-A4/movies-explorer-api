@@ -28,7 +28,7 @@ app.use(requestLogger);
 
 app.use(
   cors({
-    origin: "http://localhost:3030",
+    origin: ["http://localhost:3030", "https://movies.av4.nomoredomainsicu.ru"],
     credentials: true,
   })
 );
